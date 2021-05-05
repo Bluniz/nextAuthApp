@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { useRouter } from "next/router";
+import { setCookie } from "nookies";
 import { api } from "../services/api";
 
 type UserProps = {
@@ -34,8 +35,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await api.post("sessions", { email, password });
 
-      const { roles, permissions } = response.data;
+      const { roles, permissions, token, refreshToken } = response.data;
 
+      //! 1º parametro é o contexto, porém isso serve apenas server side, no clientSide coloca undefined
+      //! 2º parametro é o nome do cookie
+      //! 3º parametro é o valor que quer armazenas
+      //! 4º parametro são opções adicionais desde tempo de expiração e acesso por rota.
+      setCookie(undefined, "nextAuthToken", token, {
+        maxAge: 60 * 60 * 24 * 30,
+        path: "/",
+      });
+      setCookie(undefined, "nextAuthrefreshToken", refreshToken, {
+        maxAge: 60 * 60 * 24 * 30,
+        path: "/",
+      });
       setUser({
         email,
         roles,

@@ -34,3 +34,13 @@
 05:36 -> Imprime dados do usuário na dashboard
 
 08:16 -> Explicar diferença entre sessionStorage, localStorage e Cookies
+
+# Salvando tokens nos cookies
+
+- Opção de lidar com cookies com fácil integração com o next\*
+
+00:34 -> instalar nookies -> pega função setCookie
+
+01:50 -> Explicando variaveis que a função setCookie recebe e informações adicionais
+
+03:30 -> Explica sobre o 4º parametro da função
