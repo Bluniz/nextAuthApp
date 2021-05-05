@@ -44,3 +44,15 @@
 01:50 -> Explicando variaveis que a função setCookie recebe e informações adicionais
 
 03:30 -> Explica sobre o 4º parametro da função
+
+# Recuperando estado da autenticação
+
+00:42 -> Cria useEffect para pegar dados do usuário quando a tela renderizar(caso exista nos cookies é claro)
+
+02:22 -> Função parseCookies do nookies -> cria verificação
+
+04:22 explicando sobre enviar tokens nas requisições -> Ajusta em services/api
+
+06:00 -> Preenche dados no user
+
+10:00 -> Atualiza token após pegar dados da requisição com api.defaults.headers
