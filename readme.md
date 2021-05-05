@@ -56,3 +56,19 @@
 06:00 -> Preenche dados no user
 
 10:00 -> Atualiza token após pegar dados da requisição com api.defaults.headers
+
+# Realizando refresh do token
+
+00:18 -> Diminuir tempo dos tokens para 10 segundos.
+
+01:10 -> Fala sobre interceptos do axios para interceptar as requisições.
+-> Você pode interceptar tanto uma request quanto uma response.
+-> Primeiro parametro da função: "O que eu quero fazer se a resposta der sucesso"
+-> Segundo parametro da função: "O que eu quero fazer se ocorrer algum erro"
+-> Axios possui uma tipagem de AxiosError para os interceptors
+
+05:50 -> Pega Refresh token quando a requisição tiver status 401 e um code token.expired para então fazer a requisição de refreshToken na rota post /refresh enviando o refreshToken e pegando o token do response.data.
+
+06:00 -> Atualiza token após funcionar
+
+11:47 -> Quando o interceptor identificar que o token estiver espirado, ele irá pausar todas as requisições até o token ser atualizado. Após isso, executar as requisições. (Fila de requisição);
