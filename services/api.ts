@@ -2,6 +2,8 @@ import axios, { AxiosError } from "axios";
 import { parseCookies, setCookie } from "nookies";
 
 let cookies = parseCookies();
+let isRefreshing = false;
+let failedRequestsQueue = [];
 
 export const api = axios.create({
   baseURL: "http://localhost:3333",
@@ -22,27 +24,58 @@ api.interceptors.response.use(
         cookies = parseCookies();
 
         const { nextAuthrefreshToken: refreshToken } = cookies;
+        const originalConfig = error.config;
 
-        api.post("/refresh", { refreshToken }).then((response) => {
-          setCookie(undefined, "nextAuthToken", response.data.token, {
-            maxAge: 60 * 60 * 24 * 30,
-            path: "/",
+        if (!isRefreshing) {
+          isRefreshing = true;
+          api
+            .post("/refresh", { refreshToken })
+            .then((response) => {
+              setCookie(undefined, "nextAuthToken", response.data.token, {
+                maxAge: 60 * 60 * 24 * 30,
+                path: "/",
+              });
+              setCookie(
+                undefined,
+                "nextAuthrefreshToken",
+                response.data.refreshToken,
+                {
+                  maxAge: 60 * 60 * 24 * 30,
+                  path: "/",
+                }
+              );
+
+              api.defaults.headers[
+                "Authorization"
+              ] = `Bearer ${response.data.token}`;
+
+              failedRequestsQueue.forEach((request) =>
+                request.onSucess(response.data.token)
+              );
+              failedRequestsQueue = [];
+            })
+            .catch((error) => {
+              failedRequestsQueue.forEach((request) =>
+                request.onFailure(error)
+              );
+            })
+            .finally(() => {
+              isRefreshing = false;
+            });
+        }
+
+        return new Promise((resolve, reject) => {
+          failedRequestsQueue.push({
+            onSucess: (token: string) => {
+              originalConfig.headers["Authorization"] = `Bearer ${token}`;
+
+              resolve(api(originalConfig));
+            },
+            onFailure: (error: AxiosError) => {
+              reject(error);
+            },
           });
-          setCookie(
-            undefined,
-            "nextAuthrefreshToken",
-            response.data.refreshToken,
-            {
-              maxAge: 60 * 60 * 24 * 30,
-              path: "/",
-            }
-          );
-
-          api.defaults.headers[
-            "Authorization"
-          ] = `Bearer ${response.data.token}`;
         });
-      } else {
       }
     }
   }

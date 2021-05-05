@@ -72,3 +72,17 @@
 06:00 -> Atualiza token após funcionar
 
 11:47 -> Quando o interceptor identificar que o token estiver espirado, ele irá pausar todas as requisições até o token ser atualizado. Após isso, executar as requisições. (Fila de requisição);
+
+# Fila de requisições no Axios
+
+00:45 -> Cria variavel isRefreshing e faz condição para acontecer só uma vez a requisição de refresh
+
+01:58 -> retorna uma nova promisse e o Axios não suporta um assync portanto justificando o retorno de uma promisse.
+
+02:42 -> Cria uma variavel pra armazenar todas as requests que falharam.
+
+04:50 -> pega error.config que tem todas as informações das requisições que falharam
+
+06:45 -> Quando terminar de fazer refresh(finally) vai voltar o isRefreshing para false e se a requisição tiver funcionando, vamos pegar cada requisição que falhou e chamar elas novamente passando o token numa função configurada anteriormente na promise.
+Após isso limpar lista.
+Se tiver erro chamando a função de failure
