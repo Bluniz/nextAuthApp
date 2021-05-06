@@ -86,3 +86,11 @@
 06:45 -> Quando terminar de fazer refresh(finally) vai voltar o isRefreshing para false e se a requisição tiver funcionando, vamos pegar cada requisição que falhou e chamar elas novamente passando o token numa função configurada anteriormente na promise.
 Após isso limpar lista.
 Se tiver erro chamando a função de failure
+
+# Realizando logout automático
+
+01:40: Importa destroyCookie e começa a criar logistica para fazer logou automático.
+
+03:00 Faz uma trativa de error na dashboard
+
+04:00 Ajusta interceptors quando não for erro de token expired, destroi os cookies e redireciona para página inicial. E no axios interceptors, no final dos ifs é impotante caso não pasase em nenhuma condição, retornar o erro do axios.

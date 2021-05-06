@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { parseCookies, setCookie } from "nookies";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { signOut } from "../context/AuthContext";
 
 let cookies = parseCookies();
 let isRefreshing = false;
@@ -76,7 +77,11 @@ api.interceptors.response.use(
             },
           });
         });
+      } else {
+        signOut();
       }
     }
+    //! Caso não passe em nenhum if, retorne o erro normalmente.
+    return Promise.reject(error);
   }
 );
