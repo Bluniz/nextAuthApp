@@ -112,3 +112,18 @@ Se tiver erro chamando a função de failure
 high order funcion uma função que pode retornar uma função ou receber uma função e executar uma função
 
 04:35 -> Se usuário não tiver autenticado, retorna função que recebeu como parametro. Da pra falar que o retorno da função é uma Promise do tipo GetServerSideResult.
+
+# Validando autenticação(Server)
+
+00:13 Cria arquivo withSSRAuth.ts para getServerSide para páginas de usuários logados. Se não existir token, retorna pra login(Unicas mudanças pra ultima função)
+
+01:00 Na página dashboard faz um método getServerSideProps com withSSRAUTH e retorna props vazia.
+
+05:00 Ajusta no api para verificar se está no browser com process.browser(Se tiver no browser usa o signOut) se não, não usa.
+
+08:00 Pega tudo do axios e coloca numa fução chamada setupApiClient e no final para return ap.
+
+- Retira export
+- coloca cookies dentro e fala que essa função recebe um contexto, para então o parseCookies receber
+
+09:00 Cria arquivo apiClient dentro do arquivo api.
