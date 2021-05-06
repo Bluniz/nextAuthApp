@@ -102,3 +102,13 @@ Se tiver erro chamando a função de failure
 02:43 -> Nookies funcionam do lado do servidor, porém dessa vez colocamos o contexto pois estamos no servidor :D
 
 03:42 -> Se o token existe, redirectiona pra dashboard e isso não é permanente
+
+# Validando visitante
+
+00:30 -> Cria uma pasta utils com um arquivo withSSRGuest para páginas que só podem ser acessadas por visitantes/não logadas. Essa função vai ficar dentro do getServerSideProps. Essa função recebe uma outra função como parametro com o formato GetServerSideProps.
+
+02:50 -> Utiliza um high order funcion para retornar uma outra função(No caso a do getServerSideProps), o contexto é do tipo GetServerSidePropsContext
+
+high order funcion uma função que pode retornar uma função ou receber uma função e executar uma função
+
+04:35 -> Se usuário não tiver autenticado, retorna função que recebeu como parametro. Da pra falar que o retorno da função é uma Promise do tipo GetServerSideResult.
