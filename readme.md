@@ -94,3 +94,11 @@ Se tiver erro chamando a função de failure
 03:00 Faz uma trativa de error na dashboard
 
 04:00 Ajusta interceptors quando não for erro de token expired, destroi os cookies e redireciona para página inicial. E no axios interceptors, no final dos ifs é impotante caso não pasase em nenhuma condição, retornar o erro do axios.
+
+# Recuperando token no server-side
+
+01:05 -> Faz metódo getServerSideProps na page login fazendo a verificação se o usuário ta logado ou não.
+
+02:43 -> Nookies funcionam do lado do servidor, porém dessa vez colocamos o contexto pois estamos no servidor :D
+
+03:42 -> Se o token existe, redirectiona pra dashboard e isso não é permanente
