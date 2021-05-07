@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { parseCookies, setCookie } from "nookies";
 import { signOut } from "../context/AuthContext";
+import { AuthTokenError } from "../errors/AuthTokenError";
 
 let isRefreshing = false;
 let failedRequestsQueue = [];
@@ -80,7 +81,12 @@ export function setupApiClient(ctx = undefined) {
             });
           });
         } else {
-          signOut();
+          //! O next guarda variaveis de ambiente para informar quando você está no lado do navegador ou servidor
+          if (process.browser) {
+            signOut();
+          } else {
+            return Promise.reject(new AuthTokenError());
+          }
         }
       }
       //! Caso não passe em nenhum if, retorne o erro normalmente.
