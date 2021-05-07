@@ -3,9 +3,14 @@ import { AuthContext } from "../context/AuthContext";
 import { api } from "../services/apiClient";
 import { setupApiClient } from "../services/api";
 import { withSSRAuth } from "../utils/withSSRAuth";
+import { useCan } from "../hooks/useCan";
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
+
+  const useCanSeeMetrics = useCan({
+    permissions: ["admnistrator", "editor"],
+  });
 
   useEffect(() => {
     api
@@ -16,6 +21,8 @@ export default function Dashboard() {
   return (
     <div>
       <h1>Dashboard: {user?.email}</h1>
+
+      {useCanSeeMetrics && <div>métricas</div>}
     </div>
   );
 }
