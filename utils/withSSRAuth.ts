@@ -1,8 +1,4 @@
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-} from "next";
+import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { destroyCookie, parseCookies } from "nookies";
 import { AuthTokenError } from "../errors/AuthTokenError";
 import decode from "jwt-decode";
@@ -13,13 +9,8 @@ type withSSRAuthOptions = {
   roles?: string[];
 };
 
-export function withSSRAuth<P>(
-  fn: GetServerSideProps<P>,
-  options?: withSSRAuthOptions
-) {
-  return async (
-    ctx: GetServerSidePropsContext
-  ): Promise<GetServerSidePropsResult<P>> => {
+export function withSSRAuth<P>(fn: GetServerSideProps<P>, options?: withSSRAuthOptions) {
+  return async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx);
     const token = cookies["nextAuthToken"];
 

@@ -9,11 +9,7 @@ type ValidateUsePermissionsParams = {
   roles?: string[];
 };
 
-export function validateUserPermissions({
-  user,
-  permissions,
-  roles,
-}: ValidateUsePermissionsParams) {
+export function validateUserPermissions({ user, permissions, roles }: ValidateUsePermissionsParams) {
   if (permissions?.length > 0) {
     //! O metodo every só irá retornar true se passar por todas as condições que forem colocadas dentro.
     //! O metodo some retorna true se pelo menos um dos valores passe nas condições
