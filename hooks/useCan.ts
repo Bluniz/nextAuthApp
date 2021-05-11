@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { validateUserPermissions } from "../utils/validateUsersPermissions";
 
 type UseCanParams = {
   permissions?: string[];
@@ -13,32 +14,11 @@ export function useCan({ permissions, roles }: UseCanParams) {
     return false;
   }
 
-  if (permissions?.length > 0) {
-    //! O metodo every só irá retornar true se passar por todas as condições que forem colocadas dentro.
-    //! O metodo some retorna true se pelo menos um dos valores passe nas condições
-    const hasAllPermissions = permissions.some((permission) => {
-      return user.permissions.includes(permission);
-    });
+  const userHasValidPermissions = validateUserPermissions({
+    user,
+    permissions,
+    roles,
+  });
 
-    if (!hasAllPermissions) {
-      return false;
-    }
-
-    if (!isAuthenticated) {
-      return false;
-    }
-
-    if (roles?.length > 0) {
-      //! O metodo every só irá retornar true se passar por todas as condições que forem colocadas dentro.
-      const hasAllRoles = roles.every((role) => {
-        return user.roles.includes(role);
-      });
-
-      if (!hasAllRoles) {
-        return false;
-      }
-    }
-  }
-
-  return true;
+  return userHasValidPermissions;
 }
